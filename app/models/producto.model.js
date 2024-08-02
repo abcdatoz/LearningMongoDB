@@ -24,7 +24,8 @@ module.exports = mongoose => {
             },
             categoriaId:{
                 type: mongoose.SchemaTypes.ObjectId,
-                ref: "categoria"
+                ref: "categoria",
+                required: true
             }
         }
     )

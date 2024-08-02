@@ -13,9 +13,16 @@ module.exports = mongoose => {
             imagen: Buffer,            
             activo: Boolean,
             restaurantId: {
-                type: mongoose.SchemaTypes.ObjectId,
-                ref: "restaurant"
+                type: mongoose.SchemaTypes.ObjectId,                
+                ref: "restaurant",
+                required: true
             },
+
+            productos: [{
+                type: mongoose.SchemaTypes.ObjectId,
+                ref: "producto"
+            }]
+
 
 
         }

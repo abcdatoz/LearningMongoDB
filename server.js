@@ -15,8 +15,6 @@ app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
-
-
 const db = require("./app/models")
 db.mongoose
     .connect(db.url,{
@@ -40,10 +38,10 @@ app.get("/", (req,res) =>{
 })
 
 
-//routes
+
 require("./app/routes/restaurant.routes")(app)
-
-
+require("./app/routes/categoria.routes")(app)
+require("./app/routes/producto.router")(app)
 
 const PORT = process.env.PORT || 8088
 app.listen(PORT,() => {
