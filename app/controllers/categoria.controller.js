@@ -35,20 +35,22 @@ exports.findAll = ( req,res) => {
     var condition = filterBy ? { nombre: { $regex: new RegExp(filterBy), $options: "i" }} : {}
 
     Categoria
-        .find(condition)
+        .find(condition)                
         .then( data => { res.send(data)})
         .catch ( err => {
             res.status(500).send({
                 message: err.message || "Error al obtener las categorias"
             })
         })
+
+   
 }
 
 exports.findByRestaurant = (req, res) =>{
     const idRest = req.params.id
 
     Categoria
-        .find({ restaurantId: idRest})
+        .find({ restaurantId: idRest})        
         .then(data => { res.send(data) })
         .catch( err => {
             res.status(500).send({
@@ -62,8 +64,7 @@ exports.findOne = (req, res) => {
     const id = req.params.id
 
     Categoria
-        .find({_id: id})
-        .populate('productos')
+        .find({_id: id})        
         .then (data =>{
             
             if(!data){
@@ -71,9 +72,7 @@ exports.findOne = (req, res) => {
                 return res.status(404).send({
                     message: `La categoria con id  ${id} no fue localizada`
                 })
-
             }
-
 
             res.send(data)
 

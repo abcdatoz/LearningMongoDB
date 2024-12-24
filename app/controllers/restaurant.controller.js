@@ -1,6 +1,7 @@
 const db = require("../models")
 
 const Restaurant = db.restaurantes
+const Categoria = db.categorias
 
 
 exports.create = (req,res) => {
@@ -94,27 +95,38 @@ exports.update = (req, res) => {
         })
 }
 
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
     const id = req.params.id
 
-    Restaurant.findByIdAndRemove(id, { useFindAndModify: false })
-        .then(data => {
-            if (!data){
-                res.status(404).send({
-                    message: `no se puede eliminar el restaurant con id = ${id}. quizas no se encontro el documento`
-                })                
-            }
-            else{
-                res.send({
-                    message: "El restaurant fue eliminado exitosamente"
-                })
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "could not delete restaurant with id=" + id
+
+    try {
+
+        const categorias = await Categoria.findOne({ restaurantId: id })
+
+        if (categorias){
+            return res.status(400).send({
+                message: `No se puede eliminar el restaurant porque tiene registrado categorias`
             })
+        }
+
+        const data = await Restaurant.findOneAndDelete({_id: id}, { useFindAndModify: false })
+        
+        if (!data){
+            res.status(404).send({
+                message: `no se puede eliminar el restaurant con id = ${id}. quizas no se encontro el documento`
+            })    
+        }else{
+            res.send({
+                message: "El restaurant fue eliminado exitosamente"
+            })
+        }
+
+    }
+    catch (err){
+        res.status(500).send({
+            message: "could not delete restaurant with id=" + id
         })
+    }
 }
 
 

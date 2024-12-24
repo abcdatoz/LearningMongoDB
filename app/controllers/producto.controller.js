@@ -39,6 +39,7 @@ exports.findAll = (req,res) => {
 
     Producto
         .find(condition)
+        .populate ('categoriaId')
         .then(data => { res.send(data) })
         .catch( err => {
             res.status(500).send({

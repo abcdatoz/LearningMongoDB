@@ -16,15 +16,7 @@ module.exports = mongoose => {
                 type: mongoose.SchemaTypes.ObjectId,                
                 ref: "restaurant",
                 required: true
-            },
-
-            productos: [{
-                type: mongoose.SchemaTypes.ObjectId,
-                ref: "producto"
-            }]
-
-
-
+            }
         }
     )
 
